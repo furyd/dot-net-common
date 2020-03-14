@@ -15,6 +15,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReservoirDevs.Common.Models
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReservoirDevs.Common.Extensions.Tests", "tests\unit tests\ReservoirDevs.Common.Extensions.Tests\ReservoirDevs.Common.Extensions.Tests.csproj", "{7B8536AF-DF3F-46F6-B721-4DA79614C000}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReservoirDevs.FeatureManagement", "src\ReservoirDevs.FeatureManagement\ReservoirDevs.FeatureManagement.csproj", "{E0D30745-FCC3-498E-AD1F-2A11DDD681B3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReservoirDevs.FeatureManagement.Tests", "tests\unit tests\ReservoirDevs.FeatureManagement.Tests\ReservoirDevs.FeatureManagement.Tests.csproj", "{FA1283FB-BE4D-44B8-A0AD-05AABC09FB62}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
