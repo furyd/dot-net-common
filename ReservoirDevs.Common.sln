@@ -11,13 +11,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source Code", "Source Code"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{AB242883-491C-454E-86DC-AEE538C335B5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReservoirDevs.Common.Models.Tests", "tests\unit tests\ReservoirDevs.Common.Models.Tests\ReservoirDevs.Common.Models.Tests.csproj", "{1F59DB0E-4672-4AD0-8EE3-EFD34D2FE595}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReservoirDevs.Common.Models.Tests", "tests\unit tests\ReservoirDevs.Common.Models.Tests\ReservoirDevs.Common.Models.Tests.csproj", "{1F59DB0E-4672-4AD0-8EE3-EFD34D2FE595}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReservoirDevs.Common.Extensions.Tests", "tests\unit tests\ReservoirDevs.Common.Extensions.Tests\ReservoirDevs.Common.Extensions.Tests.csproj", "{7B8536AF-DF3F-46F6-B721-4DA79614C000}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReservoirDevs.Common.Extensions.Tests", "tests\unit tests\ReservoirDevs.Common.Extensions.Tests\ReservoirDevs.Common.Extensions.Tests.csproj", "{7B8536AF-DF3F-46F6-B721-4DA79614C000}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReservoirDevs.FeatureManagement", "src\ReservoirDevs.FeatureManagement\ReservoirDevs.FeatureManagement.csproj", "{E0D30745-FCC3-498E-AD1F-2A11DDD681B3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReservoirDevs.FeatureManagement.Tests", "tests\unit tests\ReservoirDevs.FeatureManagement.Tests\ReservoirDevs.FeatureManagement.Tests.csproj", "{FA1283FB-BE4D-44B8-A0AD-05AABC09FB62}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReservoirDevs.FeatureManagement.Tests", "tests\unit tests\ReservoirDevs.FeatureManagement.Tests\ReservoirDevs.FeatureManagement.Tests.csproj", "{FA1283FB-BE4D-44B8-A0AD-05AABC09FB62}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +41,14 @@ Global
 		{7B8536AF-DF3F-46F6-B721-4DA79614C000}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7B8536AF-DF3F-46F6-B721-4DA79614C000}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7B8536AF-DF3F-46F6-B721-4DA79614C000}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0D30745-FCC3-498E-AD1F-2A11DDD681B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0D30745-FCC3-498E-AD1F-2A11DDD681B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0D30745-FCC3-498E-AD1F-2A11DDD681B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0D30745-FCC3-498E-AD1F-2A11DDD681B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA1283FB-BE4D-44B8-A0AD-05AABC09FB62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA1283FB-BE4D-44B8-A0AD-05AABC09FB62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA1283FB-BE4D-44B8-A0AD-05AABC09FB62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA1283FB-BE4D-44B8-A0AD-05AABC09FB62}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -50,6 +58,8 @@ Global
 		{DD722C19-7B51-4C27-A689-96E2F9AAB3B8} = {35EDE1D5-833F-4716-83E6-4DB780A887EA}
 		{1F59DB0E-4672-4AD0-8EE3-EFD34D2FE595} = {AB242883-491C-454E-86DC-AEE538C335B5}
 		{7B8536AF-DF3F-46F6-B721-4DA79614C000} = {AB242883-491C-454E-86DC-AEE538C335B5}
+		{E0D30745-FCC3-498E-AD1F-2A11DDD681B3} = {35EDE1D5-833F-4716-83E6-4DB780A887EA}
+		{FA1283FB-BE4D-44B8-A0AD-05AABC09FB62} = {AB242883-491C-454E-86DC-AEE538C335B5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9FB13DB6-089F-43AF-B1B6-6CD05D9B3C0C}
