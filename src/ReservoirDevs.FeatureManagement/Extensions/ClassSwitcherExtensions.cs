@@ -9,7 +9,11 @@ namespace ReservoirDevs.FeatureManagement.Extensions
             where TEnabledClass : class, TInterface
             where TDisabledClass : class, TInterface
         {
-            serviceCollection.Configure<ClassSwitcherOptions<TInterface>>(options => { options.Flag = featureFlag; });
+            serviceCollection.Configure<ClassSwitcherOptions>(options =>
+            {
+                options.Flag = featureFlag;
+                options.Interface = typeof(TInterface);
+            });
 
             serviceCollection.AddTransient<TInterface, TEnabledClass>();
             serviceCollection.AddTransient<TInterface, TDisabledClass>();

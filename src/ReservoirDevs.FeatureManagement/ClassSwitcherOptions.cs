@@ -1,8 +1,11 @@
-﻿namespace ReservoirDevs.FeatureManagement
+﻿using System;
+
+namespace ReservoirDevs.FeatureManagement
 {
-    // ReSharper disable once UnusedTypeParameter
-    public class ClassSwitcherOptions<TInterface> where TInterface : class
+    public class ClassSwitcherOptions
     {
         public string Flag { get; set; }
+
+        public Type Interface { get; set; }
     }
 }

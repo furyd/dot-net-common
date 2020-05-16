@@ -14,16 +14,17 @@ namespace ReservoirDevs.FeatureManagement.Tests.ClassSwitcher
     public class GetActiveClassTests
     {
         private readonly Mock<IFeatureManagerSnapshot> _featureManager;
-        private readonly Mock<IOptions<ClassSwitcherOptions<IDisposable>>> _options;
-        private readonly Mock<ILogger<ClassSwitcher<IDisposable, HttpRequestMessage, HttpClientHandler>>> _logger;
+        private readonly Mock<IEnumerable<IOptions<ClassSwitcherOptions>>> _options;
 
         public GetActiveClassTests()
         {
             _featureManager = new Mock<IFeatureManagerSnapshot>();
-            _options = new Mock<IOptions<ClassSwitcherOptions<IDisposable>>>();
-            _logger = new Mock<ILogger<ClassSwitcher<IDisposable, HttpRequestMessage, HttpClientHandler>>>();
+            _options = new Mock<IEnumerable<IOptions<ClassSwitcherOptions>>>();
 
-            _options.Setup(option => option.Value).Returns(new ClassSwitcherOptions<IDisposable>{ Flag = "A" });
+            var option = new Mock<IOptions<ClassSwitcherOptions>>();
+
+            option.Setup(option => option.Value).Returns(new ClassSwitcherOptions{ Flag = "A", Interface = typeof(IDisposable)});
+            _options.Setup(x => x.GetEnumerator()).Returns(new List<IOptions<ClassSwitcherOptions>>{ option.Object }.GetEnumerator());
         }
 
         private static IEnumerable<IDisposable> ValidClasses => new List<IDisposable>
@@ -37,7 +38,7 @@ namespace ReservoirDevs.FeatureManagement.Tests.ClassSwitcher
         {
             _featureManager.Setup(manager => manager.IsEnabledAsync(It.IsAny<string>())).ReturnsAsync(true);
 
-            var switcher = new ClassSwitcher<IDisposable, HttpRequestMessage, HttpClientHandler>(ValidClasses, _featureManager.Object, _options.Object, _logger.Object);
+            var switcher = new ClassSwitcher<IDisposable, HttpRequestMessage, HttpClientHandler>(ValidClasses, _featureManager.Object, _options.Object);
 
             var result = await switcher.GetActiveClass();
 
@@ -49,7 +50,7 @@ namespace ReservoirDevs.FeatureManagement.Tests.ClassSwitcher
         {
             _featureManager.Setup(manager => manager.IsEnabledAsync(It.IsAny<string>())).ReturnsAsync(false);
 
-            var switcher = new ClassSwitcher<IDisposable, HttpRequestMessage, HttpClientHandler>(ValidClasses, _featureManager.Object, _options.Object, _logger.Object);
+            var switcher = new ClassSwitcher<IDisposable, HttpRequestMessage, HttpClientHandler>(ValidClasses, _featureManager.Object, _options.Object);
 
             var result = await switcher.GetActiveClass();
 

@@ -14,14 +14,12 @@ namespace ReservoirDevs.FeatureManagement.Tests.ClassSwitcher
     public class ConstructorTests
     {
         private readonly Mock<IFeatureManagerSnapshot> _featureManager;
-        private readonly Mock<IOptions<ClassSwitcherOptions<IDisposable>>> _options;
-        private readonly Mock<ILogger<ClassSwitcher<IDisposable, HttpRequestMessage, HttpClientHandler>>> _logger;
+        private readonly Mock<IOptions<ClassSwitcherOptions>> _options;
 
         public ConstructorTests()
         {
             _featureManager = new Mock<IFeatureManagerSnapshot>();
-            _options = new Mock<IOptions<ClassSwitcherOptions<IDisposable>>>();
-            _logger = new Mock<ILogger<ClassSwitcher<IDisposable, HttpRequestMessage, HttpClientHandler>>>();
+            _options = new Mock<IOptions<ClassSwitcherOptions>>();
         }
 
         private static IEnumerable<string> GetClassSwitchParameterNames => typeof(ClassSwitcher<IDisposable, HttpRequestMessage, HttpClientHandler>).GetConstructors().First().GetParameters().Select(parameterInfo => parameterInfo.Name);
@@ -41,7 +39,7 @@ namespace ReservoirDevs.FeatureManagement.Tests.ClassSwitcher
         [Fact]
         public void Constructor_ThrowsException_WhenClassesAreNull()
         {
-            Action action = () => new ClassSwitcher<IDisposable, HttpRequestMessage, HttpClientHandler>(null, null, null, null);
+            Action action = () => new ClassSwitcher<IDisposable, HttpRequestMessage, HttpClientHandler>(null, null, null);
 
             action.Should().ThrowExactly<ArgumentNullException>().And.ParamName.Should().Be(GetClassSwitchParameterNames.First());
         }
@@ -50,7 +48,7 @@ namespace ReservoirDevs.FeatureManagement.Tests.ClassSwitcher
         [Fact]
         public void Constructor_ThrowsException_WhenClassesHaveLessThanTwoItems()
         {
-            Action action = () => new ClassSwitcher<IDisposable, HttpRequestMessage, HttpClientHandler>(new List<IDisposable>(), null, null, null);
+            Action action = () => new ClassSwitcher<IDisposable, HttpRequestMessage, HttpClientHandler>(new List<IDisposable>(), null, null);
 
             action.Should().ThrowExactly<ArgumentOutOfRangeException>().And.ParamName.Should().Be(GetClassSwitchParameterNames.First());
         }
@@ -58,7 +56,7 @@ namespace ReservoirDevs.FeatureManagement.Tests.ClassSwitcher
         [Fact]
         public void Constructor_ThrowsException_WhenFeatureManagerIsNull()
         {
-            Action action = () => new ClassSwitcher<IDisposable, HttpRequestMessage, HttpClientHandler>(InvalidClasses, null, null, null);
+            Action action = () => new ClassSwitcher<IDisposable, HttpRequestMessage, HttpClientHandler>(InvalidClasses, null, null);
 
             action.Should().ThrowExactly<ArgumentNullException>().And.ParamName.Should().Be(GetClassSwitchParameterNames.Skip(1).First());
         }
@@ -66,27 +64,43 @@ namespace ReservoirDevs.FeatureManagement.Tests.ClassSwitcher
         [Fact]
         public void Constructor_ThrowsException_WhenOptionsAreNull()
         {
-            Action action = () => new ClassSwitcher<IDisposable, HttpRequestMessage, HttpClientHandler>(InvalidClasses, _featureManager.Object, null, null);
+            Action action = () => new ClassSwitcher<IDisposable, HttpRequestMessage, HttpClientHandler>(InvalidClasses, _featureManager.Object, null);
 
             action.Should().ThrowExactly<ArgumentNullException>().And.ParamName.Should().Be(GetClassSwitchParameterNames.Skip(2).First());
         }
 
         [Fact]
-        public void Constructor_ThrowsException_WhenLoggerIsNull()
+        public void Constructor_ThrowsException_WhenOptionsAreEmpty()
         {
-            _options.Setup(option => option.Value).Returns(new ClassSwitcherOptions<IDisposable>());
+            Action action = () => new ClassSwitcher<IDisposable, HttpRequestMessage, HttpClientHandler>(InvalidClasses, _featureManager.Object, new List<IOptions<ClassSwitcherOptions>>());
 
-            Action action = () => new ClassSwitcher<IDisposable, HttpRequestMessage, HttpClientHandler>(InvalidClasses, _featureManager.Object, _options.Object, null);
+            action.Should().ThrowExactly<ArgumentNullException>().And.ParamName.Should().Be(GetClassSwitchParameterNames.Skip(2).First());
+        }
 
-            action.Should().ThrowExactly<ArgumentNullException>().And.ParamName.Should().Be(GetClassSwitchParameterNames.Skip(3).First());
+        [Fact]
+        public void Constructor_ThrowsException_WhenOptionsDoNotContainExpectedInterface()
+        {
+            var optionOne = new Mock<IOptions<ClassSwitcherOptions>>();
+            var optionTwo = new Mock<IOptions<ClassSwitcherOptions>>();
+
+            optionOne.Setup(option => option.Value).Returns(new ClassSwitcherOptions{Interface = typeof(IEnumerable<object>)});
+            optionTwo.Setup(option => option.Value).Returns(new ClassSwitcherOptions { Interface = typeof(IAsyncDisposable) });
+
+            Action action = () => new ClassSwitcher<IDisposable, HttpRequestMessage, HttpClientHandler>(InvalidClasses, _featureManager.Object, new List<IOptions<ClassSwitcherOptions>>{optionOne.Object, optionTwo.Object});
+
+            action.Should().ThrowExactly<ArgumentOutOfRangeException>().And.ParamName.Should().Be(GetClassSwitchParameterNames.Skip(2).First());
         }
 
         [Fact]
         public void Constructor_ThrowsNoException_WhenPassedValidParameters()
         {
-            _options.Setup(option => option.Value).Returns(new ClassSwitcherOptions<IDisposable>());
+            var optionOne = new Mock<IOptions<ClassSwitcherOptions>>();
+            var optionTwo = new Mock<IOptions<ClassSwitcherOptions>>();
 
-            Action action = () => new ClassSwitcher<IDisposable, HttpRequestMessage, HttpClientHandler>(ValidClasses, _featureManager.Object, _options.Object, _logger.Object);
+            optionOne.Setup(option => option.Value).Returns(new ClassSwitcherOptions { Interface = typeof(IEnumerable<object>) });
+            optionTwo.Setup(option => option.Value).Returns(new ClassSwitcherOptions { Interface = typeof(IDisposable) });
+            
+            Action action = () => new ClassSwitcher<IDisposable, HttpRequestMessage, HttpClientHandler>(ValidClasses, _featureManager.Object, new List<IOptions<ClassSwitcherOptions>> { optionOne.Object, optionTwo.Object });
 
             action.Should().NotThrow<Exception>();
         }

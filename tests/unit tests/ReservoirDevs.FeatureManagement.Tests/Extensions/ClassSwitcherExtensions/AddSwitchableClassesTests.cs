@@ -15,7 +15,7 @@ namespace ReservoirDevs.FeatureManagement.Tests.Extensions.ClassSwitcherExtensio
     public class AddSwitchableClassesTests
     {
         [Fact]
-        public void AddSwitchabeClasses_ShouldInjectExpectedServices()
+        public void AddSwitchableClasses_ShouldInjectExpectedServices()
         {
             var serviceCollection = new ServiceCollection();
 
@@ -30,7 +30,7 @@ namespace ReservoirDevs.FeatureManagement.Tests.Extensions.ClassSwitcherExtensio
             resolved.Should().NotBeNull();
             resolved?.Count().Should().Be(2);
 
-            services.GetService<IOptions<ClassSwitcherOptions<IDisposable>>>().Should().NotBeNull();
+            services.GetService<IOptions<ClassSwitcherOptions>>().Should().NotBeNull();
             services.GetService<ClassSwitcher<IDisposable, HttpRequestMessage, HttpClientHandler>>().Should().NotBeNull();
         }
     }

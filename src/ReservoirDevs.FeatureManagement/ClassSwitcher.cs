@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.FeatureManagement;
 
@@ -16,10 +15,9 @@ namespace ReservoirDevs.FeatureManagement
         private readonly TInterface _flagDisabledClass;
         private readonly TInterface _flagEnabledClass;
         private readonly IFeatureManagerSnapshot _featureManager;
-        private readonly ClassSwitcherOptions<TInterface> _options;
-        private readonly ILogger<ClassSwitcher<TInterface, TFlagEnabledClass, TFlagDisabledClass>> _logger;
+        private readonly ClassSwitcherOptions _option;
 
-        public ClassSwitcher(IEnumerable<TInterface> classes, IFeatureManagerSnapshot featureManager, IOptions<ClassSwitcherOptions<TInterface>> options, ILogger<ClassSwitcher<TInterface, TFlagEnabledClass, TFlagDisabledClass>> logger)
+        public ClassSwitcher(IEnumerable<TInterface> classes, IFeatureManagerSnapshot featureManager, IEnumerable<IOptions<ClassSwitcherOptions>> options)
         {
             var classList = classes?.ToList() ?? throw new ArgumentNullException(nameof(classes));
 
@@ -30,17 +28,22 @@ namespace ReservoirDevs.FeatureManagement
 
             _featureManager = featureManager ?? throw new ArgumentNullException(nameof(featureManager));
 
-            _options = options?.Value ?? throw new ArgumentNullException(nameof(options));
+            options = options?.ToList() ?? throw new ArgumentNullException(nameof(options));
+
+            if (!options.Any())
+            {
+                throw new ArgumentNullException(nameof(options));
+            }
+
+            _option = options.FirstOrDefault(item => item.Value.Interface == typeof(TInterface))?.Value ?? throw new ArgumentOutOfRangeException(nameof(options), $"No options found for {typeof(TInterface)}");
 
             _flagDisabledClass = classList.FirstOrDefault(item => item.GetType() == typeof(TFlagDisabledClass));
 
             _flagEnabledClass = classList.FirstOrDefault(item => item.GetType() == typeof(TFlagEnabledClass));
-
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public async Task<TInterface> GetActiveClass() =>
-        await _featureManager.IsEnabledAsync(_options.Flag)
+        await _featureManager.IsEnabledAsync(_option.Flag)
             ? _flagEnabledClass
             : _flagDisabledClass;
 
