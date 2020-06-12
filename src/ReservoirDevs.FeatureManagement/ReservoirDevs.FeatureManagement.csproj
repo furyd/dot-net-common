@@ -11,6 +11,12 @@
       <PackagePath></PackagePath>
     </None>
   </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="GitVersionTask" Version="5.*">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Options" Version="3.*" />
     <PackageReference Include="Microsoft.FeatureManagement" Version="2.*" />
   </ItemGroup>

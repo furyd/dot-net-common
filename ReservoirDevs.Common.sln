@@ -19,6 +19,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReservoirDevs.Common.Extens
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReservoirDevs.FeatureManagement", "src\ReservoirDevs.FeatureManagement\ReservoirDevs.FeatureManagement.csproj", "{9DC296C8-8412-4400-ABBF-D2E03761AFAC}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GitVersionTask Configuration", "GitVersionTask Configuration", "{5D1C6149-529B-4B1E-9998-C725FE1F504B}"
+	ProjectSection(SolutionItems) = preProject
+		GitVersion.devops.yml = GitVersion.devops.yml
+		GitVersion.yml = GitVersion.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

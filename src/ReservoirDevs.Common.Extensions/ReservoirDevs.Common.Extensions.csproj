@@ -1,11 +1,16 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <PackageLicenseFile>LICENCE.txt</PackageLicenseFile>
+    <UseFullSemVerForNuGet>true</UseFullSemVerForNuGet>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="GitVersionTask" Version="5.*">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.*" />
     <PackageReference Include="Microsoft.CodeCoverage" Version="16.*" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.*" />
